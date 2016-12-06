@@ -58,7 +58,7 @@ public class FractalJPanel extends JPanel
 
       // draw fractal pattern
       g.setColor(color);
-      drawFractal(level, 100, 90, 290, 200, g); 
+      drawFractal(level, 100, 90, 290, 200, g);
    } 
 
    // set the drawing color to c

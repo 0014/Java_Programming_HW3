@@ -6,6 +6,6 @@
 			<accessrule kind="accessible" pattern="javafx/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Arif.Gencosmanoglu.DOVER/Documents/Java/Java_programming_HW3/TipCalculator.jar"/>
+	<classpathentry kind="lib" path="C:/Java/Java_Programming_HW3/TipCalculator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
