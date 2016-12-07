@@ -1,55 +1,52 @@
 package team_questions.bouncing_balls;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Handler;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-import individual_questions.fractal.Fractal;
-import individual_questions.fractal.FractalJPanel;
+public class BouncingBall extends JFrame  implements Runnable {
 
-public class BouncingBall extends JFrame  {
+	// set the width and height of the Main Application Frame
+	int WIDTH = 800, HEIGHT = 900;
 	
-	int WIDTH = 800;
-	int HEIGHT = 900;
+	// Define another panel inside the main panel where the balls are bouncing
+	final BallJPanel ballPanel = new BallJPanel(0);
 	
-	final BallJPanel drawSpace = new BallJPanel(0);
+	// define the timer which is responsible for every movement of the balls
+	private ActionListener taskPerformer;
 	
 	public BouncingBall()
 	{
 	      super("BouncingBall");
 	      
-	      // set up control panel
-	      final JPanel controlJPanel = new JPanel();
-	      controlJPanel.setLayout(new FlowLayout());
+	      // define the timer function which will update the ball position
+	      taskPerformer = new ActionListener() {
+	          public void actionPerformed(ActionEvent evt) {
+	              //...Perform this task when timer event is fired
+	        	  ballPanel.repaint(); // redraw all the balls
+	          }
+	      };
 
-	      // create mainJPanel to contain controlJPanel and drawSpace
+	      // create mainJPanel to contain ballPanel
 	      final JPanel mainJPanel = new JPanel();
-	      mainJPanel.add(controlJPanel);
-	      mainJPanel.add(drawSpace);
-
-	      // set up color button and register listener
-	      final JButton changeColorJButton = new JButton("Test Button");
-	      controlJPanel.add(changeColorJButton);
-	      changeColorJButton.addActionListener(
-	         new ActionListener() // anonymous inner class
-	         {
-	            // process changeColorJButton event
-	            @Override
-	            public void actionPerformed(ActionEvent event)
-	            {
-	               	drawSpace.repaint();
-	            } 
-	         } // end anonymous inner class
-	      ); // end addActionListener
+	      mainJPanel.add(ballPanel);
 	      
+	      // everytime user clicks on the ball panel this event will be fired 
+	      ballPanel.addMouseListener(new MouseAdapter() {
+	    	    @Override
+	    	    public void mouseClicked(MouseEvent e) {
+	    	    	// TODO Auto-generated method stub
+	    	    	// Add a new ball to the panel
+	    	    	ballPanel.generateBall();
+	    	    }
+	    	});
+	      
+	      // attach the ball panel inside the main frame
 	      add(mainJPanel); // add JPanel to JFrame
 
 	      setSize(WIDTH, HEIGHT); // set size of JFrame
@@ -60,5 +57,19 @@ public class BouncingBall extends JFrame  {
 		// TODO Auto-generated method stub
 		BouncingBall ballApp = new BouncingBall();
 		ballApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+        // Create a new Thread instance, provide the task that we want to run
+        // (by providing the Runnable as an argument) and give the thread a name.
+        // Now we can use Thread.start() to run it!
+        Thread thread = new Thread(ballApp, "Move ball(s)");
+        thread.start();
+	}
+
+	@Override
+	public void run() {
+		 // define the timer
+		 Timer timer = new Timer(10 ,taskPerformer); // define the timer interval (10 ms)
+	     timer.setRepeats(true); // enable the timer to repeat
+	     timer.start(); // start the timer
 	}
 }

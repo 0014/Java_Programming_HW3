@@ -5,32 +5,31 @@ import java.util.Vector;
 
 public class Ball {
 
-	private int x, y;
+	public int x, y; 
+	public int directionX, directionY; 
+	
 	public Color color;
 	
-	public Ball(Color c)
+	private int radius;
+	
+	public Ball(Color c, int dirX, int dirY, int radius)
 	{
 		x = 300; y = 300; // default starting point
+		// set its properties
 		color = c;
+		
+		// set the direction of the ball
+		// these parameters also defines the speed of the ball 
+		directionX = dirX;
+		directionY = dirY;
+		
+		// this parameter will define how big is the ball
+		this.radius = radius;
 	}
 	
-	public void SetX(int x)
+	// this property is read only
+	public int getRadius()
 	{
-		this.x = x; 
-	}
-	
-	public void SetY(int y)
-	{
-		this.y = y; 
-	}
-	
-	public int GetX()
-	{
-		return x;
-	}
-	
-	public int GetY()
-	{
-		return y;
+		return radius;
 	}
 }
